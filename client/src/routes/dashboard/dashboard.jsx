@@ -1,38 +1,75 @@
-import './dashboard.css'
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import "./dashboard.css";
+
+const fetchChatbots = async () => {
+    const response = await fetch("http://127.0.0.1:5000/chatbots/", {
+        credentials: "include",
+    });
+    if (!response.ok) throw new Error("Failed to fetch chatbots");
+    const data = await response.json();
+    return data.data;
+};
 
 const Dashboard = () => {
-  return (
-    <div className='dashboard'>
-      <div className='texts'>
-        <div className='logo'>
-          <img src="/logo.png" alt="" />
-          <h1>CelebAI</h1>
-        </div>
-        <div className="options">
-          <div className="option">
-            <img src="/chat.png" alt="" />
-            <span>Skibidi</span>
-          </div>
-          <div className="option">
-            <img src="/image.png" alt="" />
-            <span>dopdop</span>
-          </div>
-          <div className="option">
-            <img src="/code.png" alt="" />
-            <span>yesyes</span>
-          </div>
-        </div>
-      </div>
-      <div className='formContainer'>
-        <form>
-          <input type ="text" placeholder='pickle ball' />
-          <button>
-            <img src="arrow.png" alt = "" />
-          </button>
-        </form>
-      </div>
-    </div>
-  )
-}
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
-export default Dashboard
+    const { data: chatbots, isLoading } = useQuery({
+        queryKey: ["chatbots"],
+        queryFn: fetchChatbots,
+    });
+
+    const createConversationMutation = useMutation({
+        mutationFn: async (chatbotId) => {
+            const response = await fetch("http://127.0.0.1:5000/conversations/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ chatbot_id: chatbotId }),
+            });
+            if (!response.ok) throw new Error("Failed to create conversation");
+            return response.json();
+        },
+        onSuccess: (data) => {
+            console.log(data)
+            const conversationId = data.id;
+            queryClient.invalidateQueries(["chatbots"]);
+            navigate(`chats/${conversationId}`);
+        },
+        onError: (error) => {
+            console.error("Error creating conversation:", error);
+        }
+    });
+
+    return (
+        <div className="dashboard">
+            <div className="texts">
+                <div className="logo">
+                    <img src="/logo.png" alt="CelebAI Logo" />
+                    <h1>CelebAI</h1>
+                </div>
+                <div className="options">
+                    {isLoading ? (
+                        <p>Loading chatbots...</p>
+                    ) : (
+                        chatbots.map((bot) => (
+                            <div
+                                className="option"
+                                key={bot.id}
+                                onClick={() => createConversationMutation.mutate(bot.id)}
+                                style={{ cursor: "pointer" }}
+                            >
+                                <img src="/chat.png" alt="Chatbot" />
+                                <span>{bot.name}</span>
+                            </div>
+                        ))
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Dashboard;

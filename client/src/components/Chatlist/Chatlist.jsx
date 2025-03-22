@@ -1,30 +1,45 @@
-import './Chatlist.css'
-import {Link} from 'react-router-dom'
+import "./Chatlist.css";
+import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+
+const fetchConversations = async () => {
+    const response = await fetch("http://127.0.0.1:5000/conversations/", {
+        credentials: "include",
+    });
+    if (!response.ok) throw new Error("Failed to fetch conversations");
+    const data = await response.json();
+    return data.data;
+};
 
 const Chatlist = () => {
-  return (
-    <div className='chatlist'>
-      <span className='title'>Dashboard</span>
-      <Link to="/dashboard">new</Link>
-      <Link to="/">haha</Link>
-      <Link to="/">haha</Link>
-      <hr/>
-      <span className='title'>RECENT CHAT</span>
-      <div className='list'>
-        <Link to="/">wtf</Link>
-        <Link to="/">wtf</Link>
-        
-      </div>
-      <hr/>
-      <div className='upgrade'>
-        <img src="/logo.png" alt="" />
-        <div className='texts'>
-          <span>Upgrade wtf</span>
-          <span></span>
-        </div>
-      </div>
-    </div>
-  )
-}
+    const { data: conversations, isLoading } = useQuery({
+        queryKey: ["conversations"],
+        queryFn: fetchConversations,
+    });
 
-export default Chatlist
+    return (
+        <div className="chatlist">
+            <span className="title">RECENT CHAT</span>
+            <div className="list">
+                {isLoading ? (
+                    <p>Loading...</p>
+                ) : (
+                    conversations.map((chat) => (
+                        <Link key={chat.id} to={`/dashboard/chats/${chat.id}`}>
+                            {chat.title || `Chat with Bot ${chat.chatbot_id}`}
+                        </Link>
+                    ))
+                )}
+            </div>
+            <hr />
+            <div className="upgrade">
+                <img src="/logo.png" alt="CelebAI Logo" />
+                <div className="texts">
+                    <span>Upgrade CelebAI</span>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Chatlist;

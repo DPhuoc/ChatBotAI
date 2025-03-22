@@ -32,6 +32,7 @@ def signup():
 @auth_bp.route("/login", methods=["POST"])
 def login():
     auth = request.json
+    print(auth)
     if not auth or not auth.get("email") or not auth.get("password"):
         return make_response("Proper Credniatials were not provinced", 401)
     
@@ -40,10 +41,11 @@ def login():
     if check_password_hash(user.password, auth.get('password')):
         token = jwt.encode({
             'id': user.id,
-            'exp': datetime.now(timezone.utc) + timedelta(minutes=30)
         },
         "secret", "HS256")
         
-        return make_response({'token': token}, 201)
+        resp = make_response({'status': "OK"}, 200)
+        resp.set_cookie("token", token)
+        return resp
     
     return make_response({'Please check your credentials'}, 401)

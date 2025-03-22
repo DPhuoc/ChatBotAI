@@ -8,7 +8,9 @@ SECRET_KEY = "secret"
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        token = request.headers.get("Authorization")
+        print(request.headers)
+        token = request.cookies.get("token")
+        print(token)
         if not token:
             return make_response({"message": "Token is missing"}, 401)
 
