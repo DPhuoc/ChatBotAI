@@ -13,9 +13,8 @@ const Homepage = () => {
             <div className="left">
                 <h1>CelebAI</h1>
                 <h2>HeHe</h2>
-                <h3>WTF</h3>
 
-                {token ? <Link to="/dashboard">LETS GO</Link> : <Link to="/signin">LETS GO</Link>};
+                {token ? <Link to="/dashboard">LETS GO</Link> : <Link to="/login">LETS GO</Link>};
 
             </div>
             <div className="right">

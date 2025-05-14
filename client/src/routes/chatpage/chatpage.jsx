@@ -5,48 +5,44 @@ import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "react-router-dom";
 
 const Chatpage = () => {
-  const endRef = useRef(null);
-  const path = useLocation().pathname;
-  const chatId = path.split("/").pop();
+    const endRef = useRef(null);
+    const path = useLocation().pathname;
+    const chatId = path.split("/").pop();
 
-  const { isPending, error, data } = useQuery({
-    queryKey: ["chat", chatId],
-    queryFn: () =>
-      fetch(`http://localhost:5000/messages/${chatId}`, {
-        credentials: "include",
-      }).then((res) => res.json()),
-  });
+    const { isPending, error, data } = useQuery({
+        queryKey: ["chat", chatId],
+        queryFn: () =>
+            fetch(`/api/messages/${chatId}`, {
+                credentials: "include",
+            }).then((res) => res.json()),
+    });
 
-  console.log(data)
+    console.log(data);
 
-  useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [data]); 
+    useEffect(() => {
+        endRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, []);
 
-  return (
-    <div className="chatpage">
-      <div className="wrapper">
-        <div className="chat">
-          {isPending && <p>Loading messages...</p>}
+    return (
+        <div className="chatpage">
+            <div className="wrapper">
+                <div className="chat">
+                    {isPending && <p>Loading messages...</p>}
 
-          {error && <p>Error loading messages: {error.message}</p>}
+                    {error && <p>Error loading messages: {error.message}</p>}
 
-          {data?.data?.map((message) => (
-            <div
-              key={message.id}
-              className={`message ${message.sender === "User" ? "user" : ""}`}
-            >
-              {message.content}
+                    {data?.data?.map((message) => (
+                        <div key={message.id} className={`message ${message.sender === "User" ? "user" : ""}`}>
+                            {message.content}
+                        </div>
+                    ))}
+
+                    <div ref={endRef} />
+                </div>
             </div>
-          ))}
-
-          <Newprompt chatID={chatId} />
-
-          <div ref={endRef} />
+            <Newprompt chatID={chatId} />
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Chatpage;

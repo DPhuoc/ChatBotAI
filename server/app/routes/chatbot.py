@@ -2,7 +2,7 @@ from flask import Blueprint, request, make_response
 from app.models import Chatbot, db
 from app.utils import token_required
 
-chatbot_bp = Blueprint('chatbot', __name__, url_prefix='/chatbots')
+chatbot_bp = Blueprint('chatbot', __name__, url_prefix='/api/chatbots')
 
 @chatbot_bp.route("/", methods=["GET"])
 @token_required

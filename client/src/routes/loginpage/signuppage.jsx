@@ -17,7 +17,7 @@ const Signuppage = () => {
             setError("Passwords do not match!");
             return;
         }
-        const response = await fetch("http://127.0.0.1:5000/auth/signup", {
+        const response = await fetch("/api/auth/signup", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData),
@@ -27,7 +27,7 @@ const Signuppage = () => {
         if (response.status === 200) {
             setError(result.message);
         } else if (response.status === 201) {
-            navigate("/signin");
+            navigate("/login");
         } else {
             setError("Signup failed. Try again.");
         }

@@ -8,7 +8,6 @@ SECRET_KEY = "secret"
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        print(request.headers)
         token = request.cookies.get("token")
         print(token)
         if not token:

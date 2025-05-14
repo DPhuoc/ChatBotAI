@@ -2,7 +2,7 @@ from flask import Blueprint, request, make_response
 from app.models import Conversation, db
 from app.utils import token_required
 
-conversation_bp = Blueprint('conversation', __name__, url_prefix='/conversations')
+conversation_bp = Blueprint('conversation', __name__, url_prefix='/api/conversations')
 
 @conversation_bp.route("/", methods=["POST"])
 @token_required

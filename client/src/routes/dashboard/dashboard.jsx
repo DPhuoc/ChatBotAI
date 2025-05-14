@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import "./dashboard.css";
 
 const fetchChatbots = async () => {
-    const response = await fetch("http://127.0.0.1:5000/chatbots/", {
+    const response = await fetch("/api/chatbots/", {
         credentials: "include",
     });
     if (!response.ok) throw new Error("Failed to fetch chatbots");
@@ -23,7 +23,7 @@ const Dashboard = () => {
 
     const createConversationMutation = useMutation({
         mutationFn: async (chatbotId) => {
-            const response = await fetch("http://127.0.0.1:5000/conversations/", {
+            const response = await fetch("/api/conversations/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",

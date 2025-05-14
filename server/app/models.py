@@ -1,6 +1,5 @@
 from . import db
 from sqlalchemy.sql import func
-from pgvector.sqlalchemy import Vector
 
 class User(db.Model):
     __tablename__ = 'users'

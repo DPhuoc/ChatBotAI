@@ -7,15 +7,15 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
     app.config.from_object('app.config.Config')
-    CORS(app, supports_credentials=True, origins="http://127.0.0.1:5173")
+    CORS(app, supports_credentials=True, origins="http://localhost:1503")
 
     db.init_app(app)
+
     with app.app_context():
-        # db.reflect()
-        db.drop_all()
+        from app.models import Chatbot, Conversation, User, Message
+        db.reflect()
         db.create_all()
-
-
+        print("HIHIHIHIH", flush=True)
 
     from app.routes.auth import auth_bp
     from app.routes.chatbot import chatbot_bp

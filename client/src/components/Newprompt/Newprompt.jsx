@@ -9,7 +9,7 @@ const Newprompt = ({ chatID }) => {
 
     const mutation = useMutation({
         mutationFn: (newMessage) => {
-            return fetch(`http://127.0.0.1:5000/messages/`, {
+            return fetch(`/api/messages/`, {
                 method: "POST",
                 credentials: "include",
                 headers: {

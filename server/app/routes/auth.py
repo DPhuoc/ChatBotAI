@@ -4,7 +4,7 @@ from app.models import User, db
 import jwt
 from datetime import datetime, timedelta, timezone
 
-auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
+auth_bp = Blueprint('auth', __name__, url_prefix='/api/auth')
 
 @auth_bp.route("/signup", methods=["POST"])
 def signup():

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchConversations = async () => {
-    const response = await fetch("http://127.0.0.1:5000/conversations/", {
+    const response = await fetch("/api/conversations/", {
         credentials: "include",
     });
     if (!response.ok) throw new Error("Failed to fetch conversations");
