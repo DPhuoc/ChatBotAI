@@ -1,6 +1,7 @@
 import "./signuppage.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from '@react-oauth/google';
 
 const Signuppage = () => {
     const [formData, setFormData] = useState({ username: "", email: "", password: "", confirmPassword: "" });
@@ -33,6 +34,28 @@ const Signuppage = () => {
         }
     };
 
+    const handleGoogleLoginSuccess = async (credentialResponse) => {
+        const token = credentialResponse.credential;
+
+        try {
+            const response = await fetch("/api/auth/google", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ token }),
+            });
+
+            const result = await response.json();
+            if (response.status === 200) {
+                navigate("/dashboard");
+            } else {
+                setError(result.message || "Google login failed");
+            }
+        } catch (err) {
+            setError("An error occurred during Google login");
+        }
+    };
+
     return (
         <div className="signup">
             <div className="register-container">
@@ -44,6 +67,13 @@ const Signuppage = () => {
                     <input type="password" name="password" placeholder="Password" required onChange={handleChange} />
                     <input type="password" name="confirmPassword" placeholder="Confirm Password" required onChange={handleChange} />
                     <button type="submit">Register</button>
+                    <div style={{ textAlign: "center", marginTop: "20px" }}>
+                        <GoogleLogin
+                            onSuccess={handleGoogleLoginSuccess}
+                            onError={() => setError("Google login failed")}
+                        />
+                    </div>
+
                 </form>
             </div>
         </div>

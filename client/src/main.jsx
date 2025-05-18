@@ -10,6 +10,7 @@ import Dashboardlayout from "./layout/dashboardlayout/dashboardlayout";
 import Signinpage from "./routes/signinpage/signinpage";
 import Signuppage from "./routes/loginpage/signuppage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const queryClient = new QueryClient();
 
@@ -48,8 +49,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
-        <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} />
-        </QueryClientProvider>
+        <GoogleOAuthProvider clientId="81760605422-m9lhntv5moju0g6k8k86q65ad3sbqg5p.apps.googleusercontent.com">
+            <QueryClientProvider client={queryClient}>
+                <RouterProvider router={router} />
+            </QueryClientProvider>
+        </GoogleOAuthProvider>
     </React.StrictMode>
 );
