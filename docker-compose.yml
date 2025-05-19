@@ -4,7 +4,7 @@ services:
   database:
     build: ./postgresql
     ports:
-      - '5432:5432'
+      - '5432'
     environment:
       - POSTGRES_USER=postgresql
       - POSTGRES_HOST=localhost
@@ -36,3 +36,14 @@ services:
         - backend
         - database
       restart: unless-stopped
+
+  ollama:
+    build: ./ollama
+    ports:
+      - '11434:11434'
+    volumes:
+      - ollama_models:/root/.ollama
+    restart: unless-stopped
+
+volumes:
+  ollama_models:

@@ -1,6 +1,6 @@
 import "./signuppage.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Signuppage = () => {
     const [formData, setFormData] = useState({ username: "", email: "", password: "", confirmPassword: "" });
@@ -45,6 +45,9 @@ const Signuppage = () => {
                     <input type="password" name="confirmPassword" placeholder="Confirm Password" required onChange={handleChange} />
                     <button type="submit">Register</button>
                 </form>
+                <p className="login-redirect">
+                    Already have an account? <Link to="/login">Log in here</Link>
+                </p>
             </div>
         </div>
     );

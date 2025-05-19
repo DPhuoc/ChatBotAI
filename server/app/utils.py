@@ -9,7 +9,6 @@ def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         token = request.cookies.get("token")
-        print(token)
         if not token:
             return make_response({"message": "Token is missing"}, 401)
 

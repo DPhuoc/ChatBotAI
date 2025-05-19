@@ -1,6 +1,6 @@
 import "./signinpage.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Signinpage = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
@@ -41,6 +41,9 @@ const Signinpage = () => {
                     <input type="password" name="password" placeholder="Password" required onChange={handleChange}/>
                     <button type="submit">Login</button>
                 </form>
+                <p className="signup-redirect">
+                    Don&apos;t have an account? <Link to="/signup">Create one here</Link>
+                </p>
             </div>
         </div>
     );
