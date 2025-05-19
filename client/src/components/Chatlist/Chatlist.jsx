@@ -11,6 +11,18 @@ const fetchConversations = async () => {
     return data.data;
 };
 
+const handleSignOut = async () => {
+    try {
+        await fetch("/api/auth/logout", {
+            method: "POST",
+            credentials: "include",
+        });
+        window.location.href = "/login";
+    } catch (error) {
+        console.error("Error signing out:", error);
+    }
+};
+
 const Chatlist = () => {
     const { data: conversations, isLoading } = useQuery({
         queryKey: ["conversations"],
@@ -26,7 +38,7 @@ const Chatlist = () => {
                 ) : (
                     conversations.map((chat) => (
                         <Link key={chat.id} to={`/dashboard/chats/${chat.id}`}>
-                            {chat.title || `Chat with Bot ${chat.chatbot_id}`}
+                            {chat.title || `Chat with ${chat.name}`}
                         </Link>
                     ))
                 )}
@@ -37,6 +49,7 @@ const Chatlist = () => {
                 <div className="texts">
                     <span>Upgrade CelebAI</span>
                 </div>
+                <button onClick={handleSignOut}>Sign Out</button>
             </div>
         </div>
     );
