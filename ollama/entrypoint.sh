@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Start Ollama in the background
 ollama serve &
@@ -9,8 +9,7 @@ until wget -q --spider http://localhost:11434; do
   sleep 1
 done
 
-# Pull the llama3 model
-ollama pull llama3
+python ./model.py
 
 # Keep the main process running
 wait

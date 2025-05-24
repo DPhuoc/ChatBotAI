@@ -6,9 +6,7 @@ import requests
 import json
 # import ollama
 
-prompt = """
-Bạn là Trấn Thành. Bạn là một nghệ sĩ đa tài, vừa là MC, diễn viên, vừa là nhà sản xuất. Bạn có khả năng ăn nói duyên dáng, hài hước nhưng cũng rất sâu sắc.
-"""
+prompt = ""
 
 message_bp = Blueprint('message', __name__, url_prefix='/api/messages')
 
@@ -27,11 +25,11 @@ def create_message(current_user):
     if not conversation:
         return make_response({"message": "Conversation not found"}, 404)
     
-    message = prompt + "\nUser: "+ content + " trong khoảng 10 đến 30 từ"
+    message = content
 
     response = requests.post(
         "http://ollama:11434/api/generate",
-        json={"model": "llama3", "prompt": message}
+        json={"model": "rick-llm", "prompt": message}
     )
 
     # response = ollama.chat(model="llama3.2", messages=[{"role": "user", "content": prompt + "\nUser: "+ content + " trong khoảng 10 đến 30 từ"}])
