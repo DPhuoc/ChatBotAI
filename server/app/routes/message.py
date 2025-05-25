@@ -46,6 +46,8 @@ def create_message(current_user):
         except:
             continue
 
+    ai_content = ai_content.replace("<|im_end|>", "").strip()
+
     user_message = Message(
         conversation_id=conversation_id,
         content=content,
@@ -64,7 +66,7 @@ def create_message(current_user):
 
     return make_response({
         "message": "Message created successfully",
-        # "response": ai_content
+        "response": ai_content
     }, 201)
 
 @message_bp.route("/<int:conversation_id>", methods=["GET"])

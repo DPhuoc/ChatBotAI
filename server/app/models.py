@@ -7,6 +7,7 @@ class User(db.Model):
     username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
+    is_premium = db.Column(db.Boolean, default=False, nullable=False)
     created_at = db.Column(db.DateTime, default=func.now())
 
     def __repr__(self):

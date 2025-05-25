@@ -9,7 +9,9 @@ until wget -q --spider http://localhost:11434; do
   sleep 1
 done
 
-python ./model.py
+pip install huggingface-hub
+python3 ./model.py
+ollama create rick-llm -f Modelfile
 
 # Keep the main process running
 wait

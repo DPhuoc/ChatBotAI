@@ -15,6 +15,23 @@ def create_app():
         from app.models import Chatbot, Conversation, User, Message
         db.reflect()
         db.create_all()
+
+        # Check if chatbot(s) already exist, to avoid duplicates
+        if Chatbot.query.count() == 0:
+            bot = [
+                Chatbot(
+                    name="rick-llm",
+                    description="Default free chatbot for all users",
+                    context=""
+                ),
+            ]
+            db.session.add(bot)
+
+            db.session.commit()
+            print("Initial chatbots created.")
+        else:
+            print("Chatbots already exist. Skipping initialization.")
+
         print("HIHIHIHIH", flush=True)
 
     from app.routes.auth import auth_bp

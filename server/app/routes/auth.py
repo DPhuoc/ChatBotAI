@@ -56,7 +56,8 @@ def signup():
     new_user = User(
         username=data.get("username"),
         email=data.get("email"),
-        password=generate_password_hash(data.get("password"))
+        password=generate_password_hash(data.get("password")),
+        is_premium=False
     )
     db.session.add(new_user)
     db.session.commit()
@@ -69,7 +70,7 @@ def login():
     auth = request.json
     print(auth)
     if not auth or not auth.get("email") or not auth.get("password"):
-        return make_response("Proper Credniatials were not provinced", 401)
+        return make_response("Proper Credentials were not provided", 401)
     
     user = User.query.filter_by(email = auth.get("email")).first()
 

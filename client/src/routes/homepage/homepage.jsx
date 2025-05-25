@@ -27,7 +27,7 @@ const Homepage = () => {
                         <img src={typingStatus === "human1" ? "/human1.jpeg" : typingStatus === "human2" ? "/human2.jpeg" : "bot.png"} alt="" />
                         <TypeAnimation
                             sequence={[
-                                "Skibidi",
+                                "Tung tung tung sahur",
                                 2000,
                                 () => {
                                     setTypingStatus("bot");
