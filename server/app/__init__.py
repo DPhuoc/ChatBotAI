@@ -25,7 +25,7 @@ def create_app():
                     context=""
                 ),
             ]
-            db.session.add(bot)
+            db.session.add_all(bot)
 
             db.session.commit()
             print("Initial chatbots created.")
