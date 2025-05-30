@@ -1,40 +1,65 @@
-.newprompt{
-    padding-bottom: 100px;
-  }
-    .newform{
-      width: 50%;
-      position: absolute;
-      bottom: 0;
-      background-color: #2c2937;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      padding: 0px 20px;
+.newprompt {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px 16px 30px;
+    box-sizing: border-box;
+}
 
+.newform {
+    width: 100%;
+    background-color: #2c2937;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 16px;
+    box-sizing: border-box;
+}
 
-      input{
-        flex:1;
-        padding:20px;
-        border: none;
-        outline: none;
-        background-color: transparent;
-        color: #ececec;
-      }
+.newform input[type="text"] {
+    flex: 1;
+    padding: 14px 16px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #ececec;
+    font-size: 1rem;
+}
 
-      button,label{
-        border-radius: 50%;
-        background-color: #605e68;
-        border: none;
-        padding: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
+.newform button {
+    border-radius: 50%;
+    background-color: #605e68;
+    border: none;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
 
-        img{
-          width: 16px;
-          height: 16px;
-        }
-      }
+.newform button img {
+    width: 16px;
+    height: 16px;
+}
+
+@media (max-width: 768px) {
+    .newform {
+        gap: 12px;
+        padding: 8px 12px;
     }
+
+    .newform input[type="text"] {
+        font-size: 0.95rem;
+        padding: 12px 14px;
+    }
+
+    .newform button {
+        padding: 8px;
+    }
+
+    .newform button img {
+        width: 14px;
+        height: 14px;
+    }
+}

@@ -67,10 +67,12 @@ const Signuppage = () => {
                     <input type="password" name="password" placeholder="Password" required onChange={handleChange} />
                     <input type="password" name="confirmPassword" placeholder="Confirm Password" required onChange={handleChange} />
                     <button type="submit">Register</button>
-                    <div style={{ textAlign: "center", marginTop: "20px" }}>
+                    <div className="google-login-container">
                         <GoogleLogin
                             onSuccess={handleGoogleLoginSuccess}
                             onError={() => setError("Google login failed")}
+                            size="medium"
+                            width="300"
                         />
                     </div>
 

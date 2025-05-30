@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 const Newprompt = ({ chatID }) => {
     const [question, setQuestion] = useState("");
     const [listening, setListening] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const formRef = useRef(null);
     const inputRef = useRef(null);
     const recognitionRef = useRef(null);
@@ -23,19 +24,21 @@ const Newprompt = ({ chatID }) => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["chat"] }).then(() => {
-                formRef.current.reset();
+                formRef.current?.reset();
                 setQuestion("");
+                setIsSubmitting(false);
             });
         },
         onError: (err) => {
             console.log(err);
+            setIsSubmitting(false);
         },
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const text = e.target.text.value;
-        if (!text) return;
+        if (!text || isSubmitting) return;
 
         const newMessage = {
             conversation_id: chatID,
@@ -44,10 +47,13 @@ const Newprompt = ({ chatID }) => {
         };
 
         setQuestion(text);
+        setIsSubmitting(true);
         mutation.mutate(newMessage);
     };
 
     const toggleListening = () => {
+        if (isSubmitting) return;
+
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
             alert("Speech recognition not supported in this browser.");
@@ -64,7 +70,8 @@ const Newprompt = ({ chatID }) => {
                 const spoken = event.results[0][0].transcript;
                 if (!spoken) return;
 
-                setQuestion(spoken); // show text immediately
+                setQuestion(spoken);
+                setIsSubmitting(true);
 
                 const newMessage = {
                     conversation_id: chatID,
@@ -77,6 +84,7 @@ const Newprompt = ({ chatID }) => {
 
             recognitionRef.current.onerror = (event) => {
                 console.error("Speech recognition error:", event.error);
+                setIsSubmitting(false);
             };
 
             recognitionRef.current.onend = () => {
@@ -103,11 +111,18 @@ const Newprompt = ({ chatID }) => {
                     name="text"
                     placeholder="Ask anything..."
                     ref={inputRef}
+                    disabled={isSubmitting}
                 />
-                <button type="submit">
+                <button type="submit" disabled={isSubmitting}>
                     <img src="/arrow.png" alt="Send" />
                 </button>
-                <button type="button" onClick={toggleListening} title="Speak" style={{ marginLeft: 8 }}>
+                <button
+                    type="button"
+                    onClick={toggleListening}
+                    title="Speak"
+                    style={{ marginLeft: 8 }}
+                    disabled={isSubmitting}
+                >
                     🎤
                 </button>
             </form>

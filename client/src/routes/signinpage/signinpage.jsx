@@ -6,6 +6,8 @@ import jwt_decode from "jwt-decode";
 
 const Signinpage = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
+    const [loading, setLoading] = useState(false);
+
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
@@ -15,6 +17,7 @@ const Signinpage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
         const response = await fetch("/api/auth/login", {
             method: "POST",
@@ -24,6 +27,7 @@ const Signinpage = () => {
         });
 
         const result = await response.json();
+        setLoading(false);
         if (response.status === 401) {
             setError(result.message);
         } else {
@@ -33,6 +37,7 @@ const Signinpage = () => {
 
     const handleGoogleLoginSuccess = async (credentialResponse) => {
         const token = credentialResponse.credential;
+        setLoading(true);
 
         try {
             const response = await fetch("/api/auth/google", {
@@ -43,6 +48,7 @@ const Signinpage = () => {
             });
 
             const result = await response.json();
+            setLoading(false);
             if (response.status === 200) {
                 navigate("/dashboard");
             } else {
@@ -61,15 +67,17 @@ const Signinpage = () => {
                 <form onSubmit={handleSubmit}>
                     <input type="email" name="email" placeholder="Email" required onChange={handleChange} />
                     <input type="password" name="password" placeholder="Password" required onChange={handleChange} />
-                    <button type="submit">Login</button>
-                    <hr />
-                    <div style={{ textAlign: "center", marginTop: "20px" }}>
+                    <button type="submit" disabled={loading}>
+                        {loading ? 'Logging in...' : 'Login'}
+                    </button>
+                    <div className="google-login-container">
                         <GoogleLogin
                             onSuccess={handleGoogleLoginSuccess}
                             onError={() => setError("Google login failed")}
+                            size="medium"
+                            width="300"
                         />
                     </div>
-                    <br /><br />
                 </form>
                 <p className="signup-redirect">
                     Don&apos;t have an account? <Link to="/signup">Create one here</Link>

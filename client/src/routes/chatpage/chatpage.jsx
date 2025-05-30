@@ -15,24 +15,25 @@ const Chatpage = () => {
             fetch(`/api/messages/${chatId}`, {
                 credentials: "include",
             }).then((res) => res.json()),
+        refetchInterval: 1000,
     });
-
-    console.log(data);
 
     useEffect(() => {
         endRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, []);
+    }, [data]);
 
     return (
         <div className="chatpage">
             <div className="wrapper">
                 <div className="chat">
                     {isPending && <p>Loading messages...</p>}
-
                     {error && <p>Error loading messages: {error.message}</p>}
 
                     {data?.data?.map((message) => (
-                        <div key={message.id} className={`message ${message.sender === "User" ? "user" : ""}`}>
+                        <div
+                            key={message.id}
+                            className={`message ${message.sender === "User" ? "user" : ""}`}
+                        >
                             {message.content}
                         </div>
                     ))}
@@ -40,7 +41,10 @@ const Chatpage = () => {
                     <div ref={endRef} />
                 </div>
             </div>
-            <Newprompt chatID={chatId} />
+
+            <div className="newprompt">
+                <Newprompt chatID={chatId} />
+            </div>
         </div>
     );
 };

@@ -3,27 +3,77 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-  
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-  
-      .logo {
-        display: flex;
-        align-items: center;
-        font-weight: bold;
-        gap: 8px;
-  
-        img {
-          width: 32px;
-          height: 32px;
-        }
-      }
+}
+
+.rootlayout header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.rootlayout header .logo {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    gap: 8px;
+    text-decoration: none;
+    color: white;
+}
+
+.rootlayout header .logo img {
+    width: 32px;
+    height: 32px;
+}
+
+.rootlayout main {
+    flex: 1;
+    overflow: hidden;
+}
+
+/* ================ Responsive ================ */
+
+@media (max-width: 1024px) {
+    .rootlayout {
+        padding: 16px 40px;
     }
-  
-    main {
-      flex: 1;
-      overflow: hidden;
+
+    .rootlayout header .logo span {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .rootlayout {
+        padding: 12px 20px;
+    }
+
+    .rootlayout header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .rootlayout header .logo img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .rootlayout header .logo span {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .rootlayout {
+        padding: 8px 12px;
+    }
+
+    .rootlayout header .logo img {
+        width: 24px;
+        height: 24px;
+    }
+
+    .rootlayout header .logo span {
+        font-size: 0.9rem;
     }
 }

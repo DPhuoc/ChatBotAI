@@ -12,11 +12,16 @@ const Homepage = () => {
             <img src="/orbital.png" alt="" className="orbital" />
             <div className="left">
                 <h1>CelebAI</h1>
-                <h2>HeHe</h2>
+                <h2>Where Celebrities and AI Collide ✨</h2>
+                <p className="subText">Step into a world where your favorite stars come alive through the magic of artificial intelligence.</p>
 
-                {token ? <Link to="/dashboard">LETS GO</Link> : <Link to="/login">LETS GO</Link>};
-
+                {token ? (
+                    <Link to="/dashboard">LETS GO</Link>
+                ) : (
+                    <Link to="/login">LETS GO</Link>
+                )}
             </div>
+
             <div className="right">
                 <div className="imgContainer">
                     <div className="bgContainer">
@@ -42,7 +47,7 @@ const Homepage = () => {
                                 () => {
                                     setTypingStatus("bot");
                                 },
-                                "pickelball",
+                                "Pickleball time!",
                                 2000,
                                 () => {
                                     setTypingStatus("human1");
@@ -56,6 +61,7 @@ const Homepage = () => {
                     </div>
                 </div>
             </div>
+
             <div className="terms">
                 <img src="/logo.png" alt="" />
                 <div className="links">

@@ -25,6 +25,14 @@ def create_message(current_user):
     if not conversation:
         return make_response({"message": "Conversation not found"}, 404)
     
+    user_message = Message(
+        conversation_id=conversation_id,
+        content=content,
+        sender=sender
+    )
+    db.session.add(user_message)
+    db.session.commit()
+
     message = content
 
     response = requests.post(
@@ -47,14 +55,6 @@ def create_message(current_user):
             continue
 
     ai_content = ai_content.replace("<|im_end|>", "").strip()
-
-    user_message = Message(
-        conversation_id=conversation_id,
-        content=content,
-        sender=sender
-    )
-    db.session.add(user_message)
-    db.session.commit()
 
     ai_message = Message(
         conversation_id=conversation_id,
