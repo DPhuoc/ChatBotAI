@@ -2,53 +2,55 @@ import "./Newprompt.css";
 import { useState, useRef } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-const Newprompt = ({ chatID }) => {
+const Newprompt = ({ chatID, isPremium }) => {
     const [question, setQuestion] = useState("");
     const [listening, setListening] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
     const formRef = useRef(null);
     const inputRef = useRef(null);
     const recognitionRef = useRef(null);
     const queryClient = useQueryClient();
 
     const mutation = useMutation({
-        mutationFn: (newMessage) => {
-            return fetch(`/api/messages/`, {
+        mutationFn: (newMessage) =>
+            fetch("/api/messages/", {
                 method: "POST",
                 credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(newMessage),
-            }).then((res) => res.json());
-        },
+            }).then((res) => res.json()),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["chat"] }).then(() => {
-                formRef.current?.reset();
-                setQuestion("");
-                setIsSubmitting(false);
-            });
+            queryClient.invalidateQueries({ queryKey: ["chat"] });
+            setIsSubmitting(false);
+            setQuestion("");
+            formRef.current?.reset();
         },
         onError: (err) => {
-            console.log(err);
+            console.error("Message send error:", err);
             setIsSubmitting(false);
         },
     });
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const text = e.target.text.value;
-        if (!text || isSubmitting) return;
-
+    const sendMessage = (content) => {
         const newMessage = {
             conversation_id: chatID,
-            content: text,
+            content,
             sender: "User",
         };
-
-        setQuestion(text);
+        setQuestion(content);
         setIsSubmitting(true);
         mutation.mutate(newMessage);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const text = e.target.text.value.trim();
+        if (!text || isSubmitting) return;
+
+        sendMessage(text);
     };
 
     const toggleListening = () => {
@@ -56,7 +58,7 @@ const Newprompt = ({ chatID }) => {
 
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
-            alert("Speech recognition not supported in this browser.");
+            alert("Trình duyệt của bạn không hỗ trợ nhận diện giọng nói.");
             return;
         }
 
@@ -68,18 +70,9 @@ const Newprompt = ({ chatID }) => {
 
             recognitionRef.current.onresult = (event) => {
                 const spoken = event.results[0][0].transcript;
-                if (!spoken) return;
-
-                setQuestion(spoken);
-                setIsSubmitting(true);
-
-                const newMessage = {
-                    conversation_id: chatID,
-                    content: spoken,
-                    sender: "User",
-                };
-
-                mutation.mutate(newMessage);
+                if (spoken) {
+                    sendMessage(spoken);
+                }
             };
 
             recognitionRef.current.onerror = (event) => {
@@ -97,13 +90,11 @@ const Newprompt = ({ chatID }) => {
             setListening(true);
         } else {
             recognitionRef.current.stop();
-            setListening(false);
         }
     };
 
     return (
         <>
-            {question && <div className="message user">{question}</div>}
             <form className="newform" onSubmit={handleSubmit} ref={formRef}>
                 <input id="file" type="file" multiple={false} hidden />
                 <input
@@ -112,19 +103,23 @@ const Newprompt = ({ chatID }) => {
                     placeholder="Ask anything..."
                     ref={inputRef}
                     disabled={isSubmitting}
+                    autoComplete="off"
                 />
                 <button type="submit" disabled={isSubmitting}>
                     <img src="/arrow.png" alt="Send" />
                 </button>
-                <button
-                    type="button"
-                    onClick={toggleListening}
-                    title="Speak"
-                    style={{ marginLeft: 8 }}
-                    disabled={isSubmitting}
-                >
-                    🎤
-                </button>
+
+                {isPremium && (
+                    <button
+                        type="button"
+                        onClick={toggleListening}
+                        title="Speak"
+                        style={{ marginLeft: 8 }}
+                        disabled={isSubmitting}
+                    >
+                        🎤
+                    </button>
+                )}
             </form>
         </>
     );

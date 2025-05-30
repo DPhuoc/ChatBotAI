@@ -1,5 +1,6 @@
 from . import db
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -28,6 +29,8 @@ class Conversation(db.Model):
     chatbot_id = db.Column(db.Integer, db.ForeignKey('chatbots.id'))
     started_at = db.Column(db.DateTime, default=func.now())
     ended_at = db.Column(db.DateTime)
+
+    chatbot = relationship("Chatbot")
 
 class Message(db.Model):
     __tablename__ = 'messages'

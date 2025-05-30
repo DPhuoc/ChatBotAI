@@ -28,9 +28,17 @@ def create_conversation(current_user):
 def get_conversations(current_user):
     conversations = Conversation.query.filter_by(user_id=current_user.id).all()
     result = [
-        {"id": c.id, "chatbot_id": c.chatbot_id, "started_at": c.started_at}
+        {
+            "id": c.id,
+            "chatbot_id": c.chatbot_id,
+            "chatbot_name": c.chatbot.name if c.chatbot else None,
+            "started_at": c.started_at,
+        }
         for c in conversations
     ]
-    return make_response({"message": "Conversations retrieved successfully", "data": result}, 200)
+    return make_response({
+        "message": "Conversations retrieved successfully",
+        "data": result
+    }, 200)
 
 

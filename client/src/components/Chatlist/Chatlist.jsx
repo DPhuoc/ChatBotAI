@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import "./Chatlist.css";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -23,11 +24,28 @@ const handleSignOut = async () => {
     }
 };
 
-const Chatlist = () => {
+const Chatlist = ({ isPremium }) => {
     const { data: conversations, isLoading } = useQuery({
         queryKey: ["conversations"],
         queryFn: fetchConversations,
     });
+
+    const navigate = useNavigate();
+
+    const handleUpgradeClick = async () => {
+        try {
+            const res = await fetch("/api/payment/momo", {
+                method: "POST",
+                credentials: "include",
+            });
+            const data = await res.json();
+            if (data.payUrl) {
+                window.location.href = data.payUrl;
+            }
+        } catch (err) {
+            console.error("Payment failed", err);
+        }
+    };
 
     return (
         <div className="chatlist">
@@ -38,7 +56,7 @@ const Chatlist = () => {
                 ) : (
                     conversations.map((chat) => (
                         <Link key={chat.id} to={`/dashboard/chats/${chat.id}`}>
-                            {chat.title || `Chat with ${chat.name}`}
+                            {chat.title || `Chat with ${chat.chatbot_name}`}
                         </Link>
                     ))
                 )}
@@ -46,13 +64,22 @@ const Chatlist = () => {
             <hr />
             <div className="upgrade">
                 <img src="/logo.png" alt="CelebAI Logo" />
-                <div className="texts">
-                    <span>Upgrade CelebAI</span>
-                </div>
+
+                {!isPremium ? (
+                    <div onClick={handleUpgradeClick} className="texts" style={{ cursor: 'pointer' }}>
+                        <span>Upgrade CelebAI</span>
+                    </div>
+                ) : (
+                    <div className="texts">
+                        <span>Chào Mừng VIP</span>
+                    </div>
+                )}
+
                 <button onClick={handleSignOut}>Sign Out</button>
             </div>
         </div>
     );
 };
+
 
 export default Chatlist;

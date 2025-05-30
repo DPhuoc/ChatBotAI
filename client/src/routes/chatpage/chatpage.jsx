@@ -2,12 +2,14 @@ import Newprompt from "../../components/Newprompt/Newprompt";
 import "./chatpage.css";
 import { useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useLocation } from "react-router-dom";
+import { useLocation, useOutletContext } from "react-router-dom";
 
 const Chatpage = () => {
     const endRef = useRef(null);
     const path = useLocation().pathname;
     const chatId = path.split("/").pop();
+
+    const { isPremium } = useOutletContext();
 
     const { isPending, error, data } = useQuery({
         queryKey: ["chat", chatId],
@@ -43,7 +45,7 @@ const Chatpage = () => {
             </div>
 
             <div className="newprompt">
-                <Newprompt chatID={chatId} />
+                <Newprompt chatID={chatId} isPremium={isPremium}/>
             </div>
         </div>
     );

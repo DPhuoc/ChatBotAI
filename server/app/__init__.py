@@ -16,11 +16,10 @@ def create_app():
         db.reflect()
         db.create_all()
 
-        # Check if chatbot(s) already exist, to avoid duplicates
         if Chatbot.query.count() == 0:
             bot = [
                 Chatbot(
-                    name="rick-llm",
+                    name="Rick",
                     description="Default free chatbot for all users",
                     context=""
                 ),
@@ -32,16 +31,16 @@ def create_app():
         else:
             print("Chatbots already exist. Skipping initialization.")
 
-        print("HIHIHIHIH", flush=True)
-
     from app.routes.auth import auth_bp
     from app.routes.chatbot import chatbot_bp
     from app.routes.conversation import conversation_bp
     from app.routes.message import message_bp
+    from app.routes.payment import payment_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(chatbot_bp)
     app.register_blueprint(conversation_bp)
     app.register_blueprint(message_bp)
+    app.register_blueprint(payment_bp)
 
     return app

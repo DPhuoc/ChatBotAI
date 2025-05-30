@@ -29,6 +29,8 @@ services:
       - database
     environment:
       - TZ=Asia/Ho_Chi_Minh
+    volumes:
+    - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
 
   frontend:
