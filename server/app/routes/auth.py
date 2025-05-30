@@ -8,6 +8,8 @@ from datetime import datetime, timedelta, timezone
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/api/auth')
 
+GOOGLE_CLIENT_ID = "81760605422-m9lhntv5moju0g6k8k86q65ad3sbqg5p.apps.googleusercontent.com"
+
 @auth_bp.route("/google", methods=["POST"])
 def google_login():
     data = request.json
@@ -16,10 +18,13 @@ def google_login():
 
     try:
         idinfo = id_token.verify_oauth2_token(
-            token, grequests.Request(), "81760605422-m9lhntv5moju0g6k8k86q65ad3sbqg5p.apps.googleusercontent.com"
+            token,
+            grequests.Request(),
+            GOOGLE_CLIENT_ID,
+            clock_skew_in_seconds=10  # Cho phép sai lệch 10 giây
         )
 
-        if idinfo['aud'] != "81760605422-m9lhntv5moju0g6k8k86q65ad3sbqg5p.apps.googleusercontent.com":
+        if idinfo['aud'] != GOOGLE_CLIENT_ID:
             raise ValueError("Token audience mismatch")
 
         email = idinfo['email']
@@ -31,7 +36,7 @@ def google_login():
             db.session.add(user)
             db.session.commit()
 
-        token = jwt.encode({'id': user.id}, "secret", "HS256")
+        token = jwt.encode({'id': user.id}, "secret", algorithm="HS256")
         resp = make_response({'status': "OK"}, 200)
         resp.set_cookie("token", token)
         return resp
@@ -54,9 +59,9 @@ def signup():
             return make_response({"message": "Please sign in"}, 200)
 
     new_user = User(
-        username=data.get("username"),
-        email=data.get("email"),
-        password=generate_password_hash(data.get("password"))
+        username=username,
+        email=email,
+        password=generate_password_hash(password)
     )
     db.session.add(new_user)
     db.session.commit()
@@ -68,19 +73,18 @@ def signup():
 def login():
     auth = request.json
     print(auth)
+
     if not auth or not auth.get("email") or not auth.get("password"):
-        return make_response("Proper Credniatials were not provinced", 401)
+        return make_response("Proper credentials were not provided", 401)
     
-    user = User.query.filter_by(email = auth.get("email")).first()
+    user = User.query.filter_by(email=auth.get("email")).first()
+    if not user:
+        return make_response({"message": "User not found"}, 404)
 
     if check_password_hash(user.password, auth.get('password')):
-        token = jwt.encode({
-            'id': user.id,
-        },
-        "secret", "HS256")
-        
+        token = jwt.encode({'id': user.id}, "secret", algorithm="HS256")
         resp = make_response({'status': "OK"}, 200)
         resp.set_cookie("token", token)
         return resp
     
-    return make_response({'Please check your credentials'}, 401)
+    return make_response({'message': "Please check your credentials"}, 401)

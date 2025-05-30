@@ -21,10 +21,12 @@ def create_app():
     from app.routes.chatbot import chatbot_bp
     from app.routes.conversation import conversation_bp
     from app.routes.message import message_bp
+    from app.routes.payment import payment_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(chatbot_bp)
     app.register_blueprint(conversation_bp)
     app.register_blueprint(message_bp)
+    app.register_blueprint(payment_bp)
 
     return app

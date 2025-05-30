@@ -11,6 +11,7 @@ import Signinpage from "./routes/signinpage/signinpage";
 import Signuppage from "./routes/loginpage/signuppage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import PaymentSuccess from "./routes/paymentsuccess";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <Homepage />,
+            },
+            {
+                path: "/payment-success",
+                element: <PaymentSuccess />, // ✅ Thêm ở đây
             },
             {
                 element: <Dashboardlayout />,

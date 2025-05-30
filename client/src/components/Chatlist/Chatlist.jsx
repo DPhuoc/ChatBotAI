@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import "./Chatlist.css";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -17,6 +18,23 @@ const Chatlist = () => {
         queryFn: fetchConversations,
     });
 
+    const navigate = useNavigate();
+
+    const handleUpgradeClick = async () => {
+        try {
+            const res = await fetch("/api/payment/momo", {
+                method: "POST",
+                credentials: "include",
+            });
+            const data = await res.json();
+            if (data.payUrl) {
+                window.location.href = data.payUrl; // Redirect to Momo payment
+            }
+        } catch (err) {
+            console.error("Payment failed", err);
+        }
+    };
+
     return (
         <div className="chatlist">
             <span className="title">RECENT CHAT</span>
@@ -32,7 +50,7 @@ const Chatlist = () => {
                 )}
             </div>
             <hr />
-            <div className="upgrade">
+            <div className="upgrade" onClick={handleUpgradeClick} style={{ cursor: 'pointer' }}>
                 <img src="/logo.png" alt="CelebAI Logo" />
                 <div className="texts">
                     <span>Upgrade CelebAI</span>
