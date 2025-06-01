@@ -12,12 +12,8 @@ MOMO_ENDPOINT = "https://test-payment.momo.vn/v2/gateway/api/create"
 PARTNER_CODE = "MOMO"
 ACCESS_KEY = "F8BBA842ECF85"
 SECRET_KEY = "K951B6PE1waDMi640xX08PD3vg6EkVlz"
-REDIRECT_URL = "http://localhost:1503/payment-success"
-IPN_URL = "http://localhost:1503/api/payment/momo/callback"
-
-
-# REDIRECT_URL = "https://bcc9-113-161-66-26.ngrok-free.app/payment-success"
-# IPN_URL = "https://bcc9-113-161-66-26.ngrok-free.app/api/payment/momo/callback"
+REDIRECT_URL = "http://celebai.site/payment-success"
+IPN_URL = "http://celebai.site/api/payment/momo/callback"
 
 
 @payment_bp.route("/momo", methods=["POST"])

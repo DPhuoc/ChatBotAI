@@ -12,7 +12,7 @@ RUN npm install --legacy-peer-deps
 
 # Copy toàn bộ mã nguồn sau khi cài đặt
 COPY . .
-
+RUN mkdir -p dist
 # Build project React/Vite
 RUN npm run build
 

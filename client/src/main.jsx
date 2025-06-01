@@ -12,6 +12,7 @@ import Signuppage from "./routes/loginpage/signuppage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import PaymentSuccess from "./routes/paymentsuccess";
+import { HelmetProvider } from 'react-helmet-async';
 
 const queryClient = new QueryClient();
 
@@ -54,10 +55,12 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
-        <GoogleOAuthProvider clientId="81760605422-m9lhntv5moju0g6k8k86q65ad3sbqg5p.apps.googleusercontent.com">
-            <QueryClientProvider client={queryClient}>
-                <RouterProvider router={router} />
-            </QueryClientProvider>
-        </GoogleOAuthProvider>
+        <HelmetProvider>
+            <GoogleOAuthProvider clientId="81760605422-m9lhntv5moju0g6k8k86q65ad3sbqg5p.apps.googleusercontent.com">
+                <QueryClientProvider client={queryClient}>
+                    <RouterProvider router={router} />
+                </QueryClientProvider>
+            </GoogleOAuthProvider>
+        </HelmetProvider>
     </React.StrictMode>
 );

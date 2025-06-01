@@ -40,14 +40,17 @@ services:
     restart: unless-stopped
 
   nginx:
-      build: ./nginx
-      ports:
-        - '1503:80'
-      depends_on:
-        - frontend
-        - backend
-        - database
-      restart: unless-stopped
+    build: ./nginx
+    ports:
+      - '80:80'
+      - '443:443' 
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro  
+    depends_on:
+      - frontend
+      - backend
+      - database
+    restart: unless-stopped
 
   ollama:
     build: ./ollama

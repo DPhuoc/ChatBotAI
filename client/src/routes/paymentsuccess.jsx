@@ -51,7 +51,7 @@ const PaymentSuccess = () => {
             <div style={{ textAlign: "center", marginTop: "100px", color: "red" }}>
                 <h2>❌ Thanh toán thất bại!</h2>
                 <p>Vui lòng thử lại hoặc liên hệ hỗ trợ.</p>
-                <button onClick={() => window.location.reload()}>Thử lại</button> <button onClick={() => navigate("/dashboard")}>Quay về trang chủ</button>
+                <button onClick={() => navigate("/dashboard")}>Quay về trang chủ</button>
             </div>
         );
     }
