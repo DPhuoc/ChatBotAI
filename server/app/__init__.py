@@ -21,7 +21,12 @@ def create_app():
                 Chatbot(
                     name="Rick",
                     description="Default free chatbot for all users",
-                    context=""
+                    context="rick-llm"
+                ),
+                Chatbot(
+                    name="Trấn Thành",
+                    description="Default free chatbot for all users",
+                    context="tranthanh-llm"
                 ),
             ]
             db.session.add_all(bot)

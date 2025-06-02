@@ -33,15 +33,20 @@ def create_message(current_user):
     db.session.add(user_message)
     db.session.commit()
 
+    chatbot = conversation.chatbot
+
+    if not chatbot or not chatbot.context:
+        return make_response({"message": "Chatbot model not found in conversation context"}, 400)
+
+    model_name = chatbot.context.strip() 
+    print(model_name, flush=True)
     message = content
 
     response = requests.post(
         "http://ollama:11434/api/generate",
-        json={"model": "rick-llm", "prompt": message}
+        json={"model": model_name, "prompt": message}
     )
 
-    # response = ollama.chat(model="llama3.2", messages=[{"role": "user", "content": prompt + "\nUser: "+ content + " trong khoảng 10 đến 30 từ"}])
-    # ai_content = response["message"]["content"]  
     messages = response.text.split('\n')
 
     ai_content = ""

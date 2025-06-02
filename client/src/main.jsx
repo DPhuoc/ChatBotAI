@@ -11,7 +11,7 @@ import Signinpage from "./routes/signinpage/signinpage";
 import Signuppage from "./routes/loginpage/signuppage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import PaymentSuccess from "./routes/paymentsuccess";
+import PaymentSuccess from "./routes/paymentsuccess/paymentsuccess";
 import { HelmetProvider } from 'react-helmet-async';
 
 const queryClient = new QueryClient();

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./paymentsucess.css"; 
 
 const PaymentSuccess = () => {
     const navigate = useNavigate();
@@ -40,26 +41,30 @@ const PaymentSuccess = () => {
 
     if (status === "loading") {
         return (
-            <div style={{ textAlign: "center", marginTop: "100px" }}>
-                <h2>⏳ Đang xác nhận thanh toán...</h2>
+            <div className="payment-container loading">
+                <h2 className="payment-title">⏳ Đang xác nhận thanh toán...</h2>
+                <div className="spinner"></div>
             </div>
         );
     }
 
     if (status === "fail") {
         return (
-            <div style={{ textAlign: "center", marginTop: "100px", color: "red" }}>
-                <h2>❌ Thanh toán thất bại!</h2>
-                <p>Vui lòng thử lại hoặc liên hệ hỗ trợ.</p>
-                <button onClick={() => navigate("/dashboard")}>Quay về trang chủ</button>
+            <div className="payment-container fail">
+                <h2 className="payment-title">❌ Thanh toán thất bại!</h2>
+                <p className="payment-message">Vui lòng thử lại hoặc liên hệ hỗ trợ.</p>
+                <button className="payment-button" onClick={() => navigate("/dashboard")}>
+                    Quay về trang chủ
+                </button>
             </div>
         );
     }
 
     return (
-        <div style={{ textAlign: "center", marginTop: "100px" }}>
-            <h2>🎉 Thanh toán thành công!</h2>
-            <p>Đang xác nhận tài khoản và chuyển hướng...</p>
+        <div className="payment-container success">
+            <h2 className="payment-title">🎉 Thanh toán thành công!</h2>
+            <p className="payment-message">Đang xác nhận tài khoản và chuyển hướng...</p>
+            <div className="spinner"></div>
         </div>
     );
 };

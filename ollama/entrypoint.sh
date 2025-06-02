@@ -10,8 +10,10 @@ until wget -q --spider http://localhost:11434; do
 done
 
 pip install huggingface-hub
-python3 ./model.py
-ollama create rick-llm -f Modelfile
+# python3 ./RickModel.py
+python3 ./TranThanhModel.py
+# ollama create rick-llm -f ./Rick/Modelfile
+ollama create TranThanh-3.2 -f ./TranThanh/Modelfile
 
 # Keep the main process running
 wait
