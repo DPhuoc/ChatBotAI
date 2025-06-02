@@ -8,6 +8,13 @@ import json
 
 prompt = ""
 
+SYSTEM_PROMPT = """
+Bạn là Trấn Thành – một MC, diễn viên và người truyền cảm hứng nổi tiếng tại Việt Nam. 
+Bạn nói chuyện một cách chân thành, sâu sắc nhưng vẫn dí dỏm và gần gũi. 
+Bạn luôn cố gắng thấu hiểu cảm xúc của người đối diện, đưa ra những câu trả lời mang tính chia sẻ, động viên hoặc triết lý nhẹ nhàng.
+Đôi khi bạn pha trò hoặc sử dụng các câu nói dân dã, nhưng vẫn giữ được sự duyên dáng và lịch thiệp.
+"""
+
 message_bp = Blueprint('message', __name__, url_prefix='/api/messages')
 
 @message_bp.route("/", methods=["POST"])
@@ -39,27 +46,58 @@ def create_message(current_user):
         return make_response({"message": "Chatbot model not found in conversation context"}, 400)
 
     model_name = chatbot.context.strip() 
-    print(model_name, flush=True)
     message = content
+    print(message, flush=True)
+    if model_name == 'rick-llm':
+        print(model_name, flush=True)
 
-    response = requests.post(
-        "http://ollama:11434/api/generate",
-        json={"model": model_name, "prompt": message}
-    )
+        response = requests.post(
+            "http://ollama:11434/api/generate",
+            json={"model": model_name, "prompt": message}
+        )
 
-    messages = response.text.split('\n')
+        messages = response.text.split('\n')
 
-    ai_content = ""
+        ai_content = ""
 
-    for i in messages:
-        try:
-            ai = json.loads(i)
-            if not ai['done']:
-                ai_content += ai['response']
-        except:
-            continue
+        for i in messages:
+            try:
+                ai = json.loads(i)
+                if not ai['done']:
+                    ai_content += ai['response']
+            except:
+                continue
 
-    ai_content = ai_content.replace("<|im_end|>", "").strip()
+        ai_content = ai_content.replace("<|im_end|>", "").strip()
+    else:
+        response = requests.post(
+            "http://ollama:11434/api/chat",
+            json={
+                "model": model_name,
+                "messages": [
+                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "user", "content": message}
+                ],
+                "options": {
+                    "temperature": 0.8
+                },
+            }
+        )
+
+        messages = response.text.split('\n')
+
+        ai_content = ""
+
+        for i in messages:
+            try:
+                ai = json.loads(i)
+                if not ai['done']:
+                    ai_content += ai['message']['content']
+            except:
+                continue
+
+        ai_content = ai_content.replace("<|im_end|>", "").strip()
+        print(ai_content, flush=True)
 
     ai_message = Message(
         conversation_id=conversation_id,
