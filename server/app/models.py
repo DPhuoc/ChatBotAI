@@ -1,6 +1,7 @@
 from . import db
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
+from pgvector.sqlalchemy import Vector
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -40,3 +41,9 @@ class Message(db.Model):
     sender = db.Column(db.String(10))
     content = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, default=func.now())
+
+class RagDocument(db.Model):
+    __tablename__ = 'rag_documents'
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text)
+    embedding = db.Column(Vector(384))

@@ -1,5 +1,5 @@
-FROM postgres:latest
+FROM ankane/pgvector
 
-COPY ./init.sql /docker-entrypoint-initdb.d/init.sql
+COPY init.sql /docker-entrypoint-initdb.d/
 
 EXPOSE 5432

@@ -18,20 +18,28 @@ const Signinpage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+        setError(null); 
 
-        const response = await fetch("/api/auth/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-            body: JSON.stringify(formData),
-        });
+        try {
+            const response = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify(formData),
+            });
 
-        const result = await response.json();
-        setLoading(false);
-        if (response.status === 401) {
-            setError(result.message);
-        } else {
-            navigate("/dashboard");
+            const result = await response.json();
+
+            if (!response.ok) {
+                setError(result?.message || "Login failed. Please try again.");
+            } else {
+                navigate("/dashboard");
+            }
+        } catch (err) {
+            setError("Network error. Please try again later.");
+            console.error("Login error:", err);
+        } finally {
+            setLoading(false);
         }
     };
 

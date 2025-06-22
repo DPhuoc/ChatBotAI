@@ -1,10 +1,10 @@
 from flask import Blueprint, request, make_response
-from app.models import Message, Conversation, db
+from app.models import Message, Conversation, db, RagDocument
 from app.utils import token_required
 from flask import jsonify
 import requests
 import json
-# import ollama
+from sentence_transformers import SentenceTransformer
 
 prompt = ""
 
@@ -14,6 +14,19 @@ Bạn nói chuyện một cách chân thành, sâu sắc nhưng vẫn dí dỏm 
 Bạn luôn cố gắng thấu hiểu cảm xúc của người đối diện, đưa ra những câu trả lời mang tính chia sẻ, động viên hoặc triết lý nhẹ nhàng.
 Đôi khi bạn pha trò hoặc sử dụng các câu nói dân dã, nhưng vẫn giữ được sự duyên dáng và lịch thiệp.
 """
+
+embedder = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
+
+def retrieve_context(query):
+    query_vec = embedder.encode(query)
+    if len(query_vec) != 384:
+        raise ValueError(f"Embedding dimension mismatch: got {len(query_vec)}, expected 384")
+    
+    result = RagDocument.query.order_by(
+        RagDocument.embedding.l2_distance(query_vec.tolist())
+    ).first()
+
+    return result.content if result else ""
 
 message_bp = Blueprint('message', __name__, url_prefix='/api/messages')
 
@@ -47,7 +60,13 @@ def create_message(current_user):
 
     model_name = chatbot.context.strip() 
     message = content
-    print(message, flush=True)
+    
+    context = retrieve_context(message)
+    
+    rag_prompt = f"Sử dụng thông tin sau đây để trả lời câu hỏi. Trả lời một cách tự nhiên như đang trò chuyện, không nhắc lại việc bạn được cung cấp thông tin.\n\nThông tin tham khảo:\n{context}\n\nCâu hỏi: {message}"
+    
+    print(f"--- RAG Prompt ---\n{rag_prompt}\n--------------------", flush=True)
+
     if model_name == 'rick-llm':
         print(model_name, flush=True)
 
@@ -76,7 +95,7 @@ def create_message(current_user):
                 "model": model_name,
                 "messages": [
                     {"role": "system", "content": SYSTEM_PROMPT},
-                    {"role": "user", "content": message}
+                    {"role": "user", "content": rag_prompt}
                 ],
                 "options": {
                     "temperature": 0.8
@@ -116,8 +135,8 @@ def create_message(current_user):
 @token_required
 def get_messages(current_user, conversation_id):
 # def get_messages(conversation_id):
-    # conversation = Conversation.query.filter_by(id=conversation_id, user_id=current_user.id).first()
-    conversation = Conversation.query.filter_by(id=conversation_id).first()
+    conversation = Conversation.query.filter_by(id=conversation_id, user_id=current_user.id).first()
+    # conversation = Conversation.query.filter_by(id=conversation_id).first()
     if not conversation:
         return make_response({"message": "Conversation not found"}, 404)
 

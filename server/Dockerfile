@@ -17,4 +17,4 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["wait-for-it", "database:5432", "--", "python3", "run.py"]
+CMD ["wait-for-it", "database:5432", "--", "sh", "-c", "python3 ingest_rag_data.py && python3 run.py"]

@@ -5,211 +5,205 @@
     align-items: center;
     padding: 20px;
     box-sizing: border-box;
+}
 
-    .texts {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        max-width: 1200px;
-        gap: 30px;
-        padding: 20px;
+.dashboard .texts {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    gap: 30px;
+    padding: 20px;
+}
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            opacity: 0.2;
-            flex-direction: column;
-            text-align: center;
+.dashboard .logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    opacity: 0.2;
+    flex-direction: column;
+    text-align: center;
+}
 
-            img {
-                width: 48px;
-                height: 48px;
-            }
+.dashboard .logo img {
+    width: 48px;
+    height: 48px;
+}
 
-            h1 {
-                font-size: 2.5rem;
-                background: linear-gradient(to right, #217bfe, #e55571);
-                background-clip: text;
-                -webkit-background-clip: text;
-                color: transparent;
-                margin: 0;
-                line-height: 1;
-            }
-        }
+.dashboard .logo h1 {
+    font-size: 2.5rem;
+    background: linear-gradient(to right, #217bfe, #e55571);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin: 0;
+    line-height: 1;
+}
 
-        .options {
-            width: 100%;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            justify-content: center;
+.dashboard .options {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    justify-content: center;
+}
 
-            .option {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 12px;
-                font-weight: 300;
-                font-size: 0.9rem;
-                padding: 20px;
-                border: 1px solid #555;
-                border-radius: 15px;
-                transition: all 0.3s ease;
-                cursor: pointer;
-                text-align: center;
-                min-height: 150px;
-                justify-content: center;
+.dashboard .option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    font-weight: 300;
+    font-size: 0.9rem;
+    padding: 20px;
+    border: 1px solid #555;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+    min-height: 150px;
+    justify-content: center;
+}
 
-                &:hover {
-                    transform: translateY(-5px);
-                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-                    border-color: #217bfe;
-                }
+.dashboard .option:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border-color: #217bfe;
+}
 
-                img {
-                    width: 40px;
-                    height: 40px;
-                    object-fit: cover;
-                }
+.dashboard .option img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
 
-                span {
-                    word-break: break-word;
-                }
-            }
-        }
+.dashboard .option span {
+    word-break: break-word;
+}
+
+.dashboard .formContainer {
+    width: 100%;
+    max-width: 600px;
+    background-color: #2c2937;
+    border-radius: 15px;
+    margin: 20px 0;
+    padding: 0 15px;
+}
+
+.dashboard .formContainer form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.dashboard .formContainer form input {
+    flex: 1;
+    padding: 15px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #ececec;
+    font-size: 0.9rem;
+}
+
+.dashboard .formContainer form button {
+    background-color: #605e68;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.dashboard .formContainer form button:hover {
+    background-color: #217bfe;
+}
+
+.dashboard .formContainer form button img {
+    width: 16px;
+    height: 16px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .dashboard .texts {
+        gap: 20px;
     }
 
-    .formContainer {
-        width: 100%;
-        max-width: 600px;
-        background-color: #2c2937;
-        border-radius: 15px;
-        margin: 20px 0;
-        padding: 0 15px;
-
-        form {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-
-            input {
-                flex: 1;
-                padding: 15px;
-                background-color: transparent;
-                border: none;
-                outline: none;
-                color: #ececec;
-                font-size: 0.9rem;
-            }
-
-            button {
-                background-color: #605e68;
-                border-radius: 50%;
-                border: none;
-                cursor: pointer;
-                padding: 8px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: background-color 0.3s ease;
-
-                &:hover {
-                    background-color: #217bfe;
-                }
-
-                img {
-                    width: 16px;
-                    height: 16px;
-                }
-            }
-        }
+    .dashboard .logo h1 {
+        font-size: 2rem;
     }
 
-    /* Responsive Adjustments */
-    @media (max-width: 1024px) {
-        .texts {
-            gap: 20px;
+    .dashboard .options {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+    }
+}
 
-            .logo {
-                h1 {
-                    font-size: 2rem;
-                }
-            }
-
-            .options {
-                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-                gap: 15px;
-            }
-        }
+@media (max-width: 768px) {
+    .dashboard .logo img {
+        width: 40px;
+        height: 40px;
     }
 
-    @media (max-width: 768px) {
-        .texts {
-            .logo {
-                img {
-                    width: 40px;
-                    height: 40px;
-                }
-
-                h1 {
-                    font-size: 1.8rem;
-                }
-            }
-
-            .options {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-                gap: 12px;
-
-                .option {
-                    padding: 15px;
-                    min-height: 120px;
-                }
-            }
-        }
+    .dashboard .logo h1 {
+        font-size: 1.8rem;
     }
 
-    @media (max-width: 480px) {
+    .dashboard .options {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 12px;
+    }
+
+    .dashboard .option {
         padding: 15px;
+        min-height: 120px;
+    }
+}
 
-        .texts {
-            gap: 15px;
-            padding: 10px;
+@media (max-width: 480px) {
+    .dashboard {
+        padding: 15px;
+    }
 
-            .logo {
-                gap: 10px;
+    .dashboard .texts {
+        gap: 15px;
+        padding: 10px;
+    }
 
-                h1 {
-                    font-size: 1.5rem;
-                }
-            }
+    .dashboard .logo {
+        gap: 10px;
+    }
 
-            .options {
-                grid-template-columns: 1fr;
-                gap: 10px;
+    .dashboard .logo h1 {
+        font-size: 1.5rem;
+    }
 
-                .option {
-                    flex-direction: row;
-                    justify-content: flex-start;
-                    min-height: auto;
-                    padding: 12px 15px;
-                    text-align: left;
-                }
-            }
-        }
+    .dashboard .options {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
 
-        .formContainer {
-            border-radius: 10px;
+    .dashboard .option {
+        flex-direction: row;
+        justify-content: flex-start;
+        min-height: auto;
+        padding: 12px 15px;
+        text-align: left;
+    }
 
-            form {
-                input {
-                    padding: 12px;
-                }
-            }
-        }
+    .dashboard .formContainer {
+        border-radius: 10px;
+    }
+
+    .dashboard .formContainer form input {
+        padding: 12px;
     }
 }

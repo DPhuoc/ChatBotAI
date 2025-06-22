@@ -91,6 +91,12 @@ def login():
     
     return make_response({'Please check your credentials'}, 401)
 
+@auth_bp.route('/logout', methods=['POST'])
+def logout():
+    resp = make_response({'message': 'Logged out'})
+    resp.set_cookie('token', '', expires=0) 
+    return resp
+
 @auth_bp.route('/me', methods=["GET"])
 @token_required
 def get_me(current_user):
