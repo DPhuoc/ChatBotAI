@@ -37,7 +37,7 @@ Hệ thống hỗ trợ:
 ## Mô hình Trấn Thành AI
 
 ### Mô hình
-Đây là một mô hình được finetune nhằm mô phỏng **Trấn Thành** – một MC, diễn viên và người kể chuyện được yêu mến tại Việt Nam. Mô hình này phản hồi theo phong cách **chân thành, sâu sắc, hài hước nhưng đầy cảm xúc**, lấy cảm hứng từ cách Trấn Thành thể hiện bản thân trong các buổi phỏng vấn, trên các chương trình truyền hình và trong những cuộc trò chuyện đời thường.
+Đây là một mô hình được finetune từ [vilm/vinallama-2.7b], dựa trên model Llama 3 nhằm mô phỏng **Trấn Thành** – một MC, diễn viên và người kể chuyện được yêu mến tại Việt Nam. Mô hình này phản hồi theo phong cách **chân thành, sâu sắc, hài hước nhưng đầy cảm xúc**, lấy cảm hứng từ cách Trấn Thành thể hiện bản thân trong các buổi phỏng vấn, trên các chương trình truyền hình và trong những cuộc trò chuyện đời thường.
 
 ### Bộ dữ liệu
 Mô hình này sử dụng một bộ dữ liệu tổng hợp được tạo bởi các mô hình ngôn ngữ lớn (LLMs) khác, mô phỏng phong cách nói chuyện của Trấn Thành. Nó **không chứa bất kỳ cuộc trò chuyện thật, dữ liệu cá nhân hay tài liệu có bản quyền nào từ Trấn Thành**.
