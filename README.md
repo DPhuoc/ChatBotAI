@@ -34,6 +34,23 @@ Hệ thống hỗ trợ:
 
 ---
 
+## Mô hình Trấn Thành AI
+
+### Mô hình
+Đây là một mô hình được finetune nhằm mô phỏng **Trấn Thành** – một MC, diễn viên và người kể chuyện được yêu mến tại Việt Nam. Mô hình này phản hồi theo phong cách **chân thành, sâu sắc, hài hước nhưng đầy cảm xúc**, lấy cảm hứng từ cách Trấn Thành thể hiện bản thân trong các buổi phỏng vấn, trên các chương trình truyền hình và trong những cuộc trò chuyện đời thường.
+
+### Bộ dữ liệu
+Mô hình này sử dụng một bộ dữ liệu tổng hợp được tạo bởi các mô hình ngôn ngữ lớn (LLMs) khác, mô phỏng phong cách nói chuyện của Trấn Thành. Nó **không chứa bất kỳ cuộc trò chuyện thật, dữ liệu cá nhân hay tài liệu có bản quyền nào từ Trấn Thành**.
+
+### Tuyên bố miễn trừ trách nhiệm
+Dự án này được tạo ra **chỉ với mục đích giáo dục**, là một phần của bài tập ở trường. Chúng tôi **không có ý định sử dụng nó cho bất kỳ mục đích xấu, lừa đảo hay thương mại nào**. Dự án **không có liên kết hoặc được Trấn Thành xác nhận**, và tất cả các phản hồi được tạo ra đều là **hư cấu và chỉ dùng để minh họa**.
+
+---
+
+- **Liên kết mô hình**: [https://huggingface.co/falcon281/TranThanh-2.7B](https://huggingface.co/falcon281/TranThanh-2.7B)  
+- **Liên kết bộ dữ liệu**: [https://huggingface.co/datasets/falcon281/Tran-Thanh-phong-van](https://huggingface.co/datasets/falcon281/Tran-Thanh-phong-van)
+
+
 ## Video demo
 
 _TBD_
