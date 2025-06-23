@@ -1,4 +1,16 @@
-# CelebAI - Nói chuyện với người nổi tiếng bằng AI
+# CelebAI - Trò chuyện với người nổi tiếng bằng AI
+
+**CelebAI** là ứng dụng chatbot độc đáo cho phép bạn trò chuyện với các người nổi tiếng được mô phỏng bằng trí tuệ nhân tạo. Không chỉ trả lời, CelebAI còn tái hiện phong cách, kiến thức và cá tính riêng biệt của từng celeb, mang lại trải nghiệm tương tác chân thực, giải trí và đầy cảm xúc.
+
+- 🌟 **Điểm khác biệt:** CelebAI không chỉ trả lời thông tin mà còn mô phỏng cách nói chuyện, lối suy nghĩ và cảm xúc của từng người nổi tiếng.
+- 🚀 **Công nghệ:** Kết hợp LLM, RAG, vector memory, ReactJS, Flask, PostgreSQL, JWT, Docker.
+- 🔒 **Bảo mật & riêng tư:** Lưu trữ lịch sử hội thoại an toàn, xác thực người dùng bằng JWT.
+
+**Ví dụ sử dụng:**
+- Bạn muốn hỏi Trấn Thành về bí quyết thành công? Hãy chat với AI và nhận được câu trả lời đậm chất Trấn Thành!
+- Bạn tò mò về quan điểm sống của một celeb? CelebAI sẽ phản hồi đúng phong cách của họ.
+
+---
 
 ## Thành viên: 
 - Trần Đình Phước - 23521237
@@ -17,7 +29,7 @@
 
 ## Mô tả Dự án - CelebAI
 
-**CelebAI** là một ứng dụng trò chuyện độc đáo cho phép người dùng giao tiếp với các người nổi tiếng bằng trí tuệ nhân tạo (AI). Ứng dụng mô phỏng phong cách trò chuyện, kiến thức và tính cách của các celeb, mang đến trải nghiệm tương tác chân thực, thú vị và mang tính giải trí cao.
+CelebAI là một ứng dụng trò chuyện cho phép người dùng giao tiếp với các người nổi tiếng bằng trí tuệ nhân tạo (AI). Ứng dụng mô phỏng phong cách trò chuyện, kiến thức và tính cách của các celeb, mang đến trải nghiệm tương tác chân thực, thú vị và mang tính giải trí cao.
 
 Hệ thống hỗ trợ:
 - Đăng ký/đăng nhập người dùng
@@ -124,3 +136,92 @@ git clone https://github.com/DPhuoc/ChatBotAI.git
 ```bash
 docker compose up --build -d
 ```
+
+# Project Structure (Detailed)
+
+```
+ChatBotAI/
+├── Chatbot/
+│   ├── datasets_creation.py
+│   ├── interview.csv
+│   ├── README.md
+│   └── tranthanhllm.ipynb
+├── client/
+│   ├── Dockerfile
+│   ├── index.html
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── vite.config.js
+│   ├── .Dockerignore
+│   ├── .editorconfig
+│   ├── .eslintrc.cjs
+│   ├── .gitignore
+│   ├── README.md
+│   ├── node_modules/ (auto-generated)
+│   ├── public/
+│   │   ├── arrow.png, attachment.png, ...
+│   │   ├── favicon.ico, robots.txt, sitemap.xml, ...
+│   └── src/
+│       ├── App.jsx, main.jsx, index.css
+│       ├── components/
+│       │   ├── SEO.jsx
+│       │   └── Chatlist/, Newprompt/ (mỗi thư mục gồm file .jsx, .css)
+│       ├── layout/
+│       │   └── dashboardlayout/, rootlayout/ (mỗi thư mục gồm file .jsx, .css)
+│       └── routes/
+│           ├── chatpage/, dashboard/, homepage/, loginpage/, paymentsuccess/, signinpage/
+│           │   └── (mỗi thư mục gồm file .jsx, .css)
+├── docker-compose.yml
+├── nginx/
+│   ├── default.conf
+│   ├── Dockerfile
+│   └── nginx.conf
+├── ollama/
+│   ├── Dockerfile
+│   ├── entrypoint.sh
+│   ├── RickModel.py
+│   └── TranThanhModel.py
+├── package-lock.json
+├── postgresql/
+│   ├── Dockerfile
+│   └── init.sql
+├── README.md
+└── server/
+    ├── Dockerfile
+    ├── requirements.txt
+    ├── crawl.py
+    ├── finetuning.ipynb
+    ├── ingest_rag_data.py
+    ├── run.py
+    ├── wikipedia_output.txt
+    ├── .Dockerignore
+    └── app/
+        ├── __init__.py
+        ├── config.py
+        ├── models.py
+        ├── test.py
+        ├── utils.py
+        ├── routes/
+        │   ├── auth.py, chatbot.py, conversation.py, message.py, payment.py
+        │   └── __pycache__/ (auto-generated)
+        └── __pycache__/ (auto-generated)
+```
+
+---
+
+## Hướng dẫn sử dụng nhanh
+
+1. Truy cập trang web: https://celebai.site/
+2. Đăng ký tài khoản mới hoặc đăng nhập.
+3. Chọn celeb và bắt đầu trò chuyện.
+4. (Tùy chọn) Nâng cấp tài khoản để sử dụng tính năng Premium.
+
+---
+
+## Liên hệ & License
+
+- **Liên hệ:**
+  - Email: 23521237@gm.uit.edu.vn
+  - Github: https://github.com/DPhuoc
+- **License:**
+  - MIT License
