@@ -47,8 +47,8 @@ Dự án này được tạo ra **chỉ với mục đích giáo dục**, là m�
 
 ---
 
-- **Liên kết mô hình**: [https://huggingface.co/falcon281/TranThanh-2.7B](https://huggingface.co/falcon281/TranThanh-2.7B)  
-- **Liên kết bộ dữ liệu**: [https://huggingface.co/datasets/falcon281/Tran-Thanh-phong-van](https://huggingface.co/datasets/falcon281/Tran-Thanh-phong-van)
+- Model's link: [https://huggingface.co/falcon281/TranThanh-2.7B](https://huggingface.co/falcon281/TranThanh-2.7B)  
+- Dataset's link: [https://huggingface.co/datasets/falcon281/Tran-Thanh-phong-van](https://huggingface.co/datasets/falcon281/Tran-Thanh-phong-van)
 
 
 ## Video demo
